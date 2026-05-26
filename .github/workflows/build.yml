@@ -1,0 +1,39 @@
+name: Build & Test
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  build:
+    name: Build & Test (.NET 8)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: |
+          dotnet restore MiraiShop.Domain/MiraiShop.Domain.csproj
+          dotnet restore MiraiShop.Application/MiraiShop.Application.csproj
+          dotnet restore MiraiShop.Infrastructure/MiraiShop.Infrastructure.csproj
+          dotnet restore MiraiShop.Server/MiraiShop.Server.csproj
+          dotnet restore MiraiShop.Tests/MiraiShop.Tests.csproj
+
+      - name: Build
+        run: |
+          dotnet build MiraiShop.Domain/MiraiShop.Domain.csproj --no-restore --configuration Release
+          dotnet build MiraiShop.Application/MiraiShop.Application.csproj --no-restore --configuration Release
+          dotnet build MiraiShop.Infrastructure/MiraiShop.Infrastructure.csproj --no-restore --configuration Release
+          dotnet build MiraiShop.Server/MiraiShop.Server.csproj --no-restore --configuration Release
+          dotnet build MiraiShop.Tests/MiraiShop.Tests.csproj --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test MiraiShop.Tests/MiraiShop.Tests.csproj --no-build --configuration Release --verbosity normal
