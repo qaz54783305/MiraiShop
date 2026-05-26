@@ -20,6 +20,8 @@
     <ProjectReference Include="..\miraishop.client\miraishop.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\MiraiShop.Application\MiraiShop.Application.csproj" />
+    <ProjectReference Include="..\MiraiShop.Infrastructure\MiraiShop.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
