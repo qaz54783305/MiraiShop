@@ -21,20 +21,10 @@ public class MemberServiceTests
         ResidentialAddress: "新北市板橋區文化路一段1號");
 
 
-    // 如果戶籍地址為空或 Null，就回傳通訊地址，否則回傳原本的戶籍地址
-    private static string ChkResidentialAddress(string ResidentialAddress, string mailingAddress)
-    {
-        return string.IsNullOrEmpty(ResidentialAddress) ? mailingAddress : ResidentialAddress;
-    }
-
     public MemberServiceTests()
     {
         _repositoryMock = new Mock<IMemberRepository>();
         _repositoryMock.Setup(r => r.ExistsByEmail(It.IsAny<string>())).Returns(false);
-        _repositoryMock
-            .Setup(r => ChkResidentialAddress(It.IsAny<string>(), It.IsAny<string>()))
-            .Returns<string, string>((residential, mailing) =>
-                string.IsNullOrEmpty(residential) ? mailing : residential);
         _service = new MemberService(_repositoryMock.Object);
     }
 
