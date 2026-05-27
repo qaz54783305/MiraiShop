@@ -1,14 +1,24 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+﻿.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 2rem;
+  background: #2b6cb0;
+  color: white;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.app-nav .brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-right: auto;
 }
 
-table {
-    margin: 0 auto;
+.app-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.app-nav a.active {
+  text-decoration: underline;
 }

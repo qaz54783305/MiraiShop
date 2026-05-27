@@ -1,0 +1,76 @@
+.login-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: sans-serif;
+}
+
+h2 {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #e53e3e;
+}
+
+.error-msg {
+  margin-top: 4px;
+  color: #e53e3e;
+  font-size: 13px;
+}
+
+.api-error {
+  margin-bottom: 12px;
+  color: #e53e3e;
+  font-size: 14px;
+  text-align: center;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #90cdf4;
+  cursor: not-allowed;
+}
+
+.register-link {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: #3182ce;
+  text-decoration: none;
+}

@@ -20,7 +20,6 @@ public class MemberServiceTests
         MailingAddress: "台北市信義區信義路五段7號",
         ResidentialAddress: "新北市板橋區文化路一段1號");
 
-
     public MemberServiceTests()
     {
         _repositoryMock = new Mock<IMemberRepository>();
@@ -43,7 +42,7 @@ public class MemberServiceTests
     }
 
     [Fact]
-    public void Register_ValidRequest_PasswordIsHashed()
+    public void Register_ValidRequest_PasswordIsHashedWithSalt()
     {
         Member? savedMember = null;
         _repositoryMock
@@ -53,10 +52,17 @@ public class MemberServiceTests
         _service.Register(ValidRequest);
 
         Assert.NotNull(savedMember);
-        Assert.NotEqual(ValidRequest.Password, savedMember!.PasswordHash);
+        Assert.NotNull(savedMember!.PasswordSalt);
+        Assert.NotEmpty(savedMember.PasswordSalt!);
 
-        var expectedHash = Convert.ToHexString(
+        // Hash must not equal plain password or unsalted hash
+        Assert.NotEqual(ValidRequest.Password, savedMember.PasswordHash);
+        var unsaltedHash = Convert.ToHexString(
             SHA256.HashData(Encoding.UTF8.GetBytes(ValidRequest.Password))).ToLowerInvariant();
+        Assert.NotEqual(unsaltedHash, savedMember.PasswordHash);
+
+        // Hash must match salted computation
+        var expectedHash = MemberService.HashPassword(ValidRequest.Password, savedMember.PasswordSalt);
         Assert.Equal(expectedHash, savedMember.PasswordHash);
     }
 
@@ -96,5 +102,35 @@ public class MemberServiceTests
         try { _service.Register(ValidRequest); } catch { }
 
         _repositoryMock.Verify(r => r.Add(It.IsAny<Member>()), Times.Never);
+    }
+
+    // --- HashPassword 單元測試 ---
+
+    [Fact]
+    public void HashPassword_WithoutSalt_ReturnsSHA256OfPassword()
+    {
+        var expected = Convert.ToHexString(
+            SHA256.HashData(Encoding.UTF8.GetBytes("pass"))).ToLowerInvariant();
+
+        Assert.Equal(expected, MemberService.HashPassword("pass"));
+    }
+
+    [Fact]
+    public void HashPassword_WithSalt_ReturnsSHA256OfSaltPlusPassword()
+    {
+        var salt = "abc123";
+        var expected = Convert.ToHexString(
+            SHA256.HashData(Encoding.UTF8.GetBytes(salt + "pass"))).ToLowerInvariant();
+
+        Assert.Equal(expected, MemberService.HashPassword("pass", salt));
+    }
+
+    [Fact]
+    public void HashPassword_SamePasswordDifferentSalt_ProducesDifferentHashes()
+    {
+        var hash1 = MemberService.HashPassword("pass", "salt1");
+        var hash2 = MemberService.HashPassword("pass", "salt2");
+
+        Assert.NotEqual(hash1, hash2);
     }
 }

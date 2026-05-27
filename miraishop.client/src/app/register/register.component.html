@@ -25,15 +25,15 @@
     </div>
 
     <div class="field">
-      <label for="mailingAddress">通訊地址 <span class="required">*</span></label>
+      <label for="mailingAddress">通訊地址 </label>
       <input id="mailingAddress" type="text" formControlName="mailingAddress" />
       <span class="error-msg">{{ getError('mailingAddress') }}</span>
     </div>
 
     <div class="field">
-      <label for="residentialAddress">住址 <span class="required">*</span></label>
+      <label for="residentialAddress">戶籍地址(沒有填寫預設為通訊地址)</label>
       <input id="residentialAddress" type="text" formControlName="residentialAddress" />
-      <span class="error-msg">{{ getError('residentialAddress') }}</span>
+      <!--<span class="error-msg">{{ getError('residentialAddress') }}</span>-->
     </div>
 
     <button type="submit" [disabled]="isSubmitting">

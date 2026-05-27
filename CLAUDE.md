@@ -114,5 +114,5 @@ Tests  → Application, Infrastructure, Domain
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan:
-specs/002-mssql-persistence/plan.md
+specs/004-Login/plan.md
 <!-- SPECKIT END -->
