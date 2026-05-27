@@ -1,0 +1,44 @@
+<div class="register-container">
+  <h2>會員註冊</h2>
+
+  <div class="alert success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="alert error"   *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    <div class="field">
+      <label for="name">姓名 <span class="required">*</span></label>
+      <input id="name" type="text" formControlName="name" />
+      <span class="error-msg">{{ getError('name') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="email">電子信箱 <span class="required">*</span></label>
+      <input id="email" type="email" formControlName="email" />
+      <span class="error-msg">{{ getError('email') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="password">密碼 <span class="required">*</span></label>
+      <input id="password" type="password" formControlName="password" />
+      <span class="error-msg">{{ getError('password') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="mailingAddress">通訊地址 <span class="required">*</span></label>
+      <input id="mailingAddress" type="text" formControlName="mailingAddress" />
+      <span class="error-msg">{{ getError('mailingAddress') }}</span>
+    </div>
+
+    <div class="field">
+      <label for="residentialAddress">住址 <span class="required">*</span></label>
+      <input id="residentialAddress" type="text" formControlName="residentialAddress" />
+      <span class="error-msg">{{ getError('residentialAddress') }}</span>
+    </div>
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? '處理中...' : '立即註冊' }}
+    </button>
+
+  </form>
+</div>

@@ -1,0 +1,53 @@
+.register-container {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+h2 { margin-bottom: 1.5rem; }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+label { font-weight: 600; margin-bottom: 0.25rem; }
+
+.required { color: #e53e3e; }
+
+input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus { outline: none; border-color: #4299e1; }
+
+.error-msg { color: #e53e3e; font-size: 0.85rem; min-height: 1.2em; }
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+button:disabled { background: #a0aec0; cursor: not-allowed; }
+
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.alert.success { background: #c6f6d5; color: #276749; }
+.alert.error   { background: #fed7d7; color: #9b2c2c; }

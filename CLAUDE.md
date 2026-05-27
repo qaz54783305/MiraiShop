@@ -110,3 +110,9 @@ Tests  → Application, Infrastructure, Domain
 ## 新增功能時請使用 `docs/feature-spec.md` 的範本
 
 開發者會提供一份填好的 feature spec，AI 應依照 spec 內容與上方規則逐層實作。
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan:
+specs/002-mssql-persistence/plan.md
+<!-- SPECKIT END -->
