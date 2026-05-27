@@ -20,15 +20,16 @@ public class MemberService : IMemberService
     {
         if (_repository.ExistsByEmail(request.Email))
             throw new InvalidOperationException($"此電子信箱已被註冊：{request.Email}");
- 
-         var member = new Member
+
+        var salt = Guid.NewGuid().ToString("N");
+        var member = new Member
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
             Email = request.Email,
-            PasswordHash = HashPassword(request.Password),
+            PasswordHash = HashPassword(request.Password, salt),
+            PasswordSalt = salt,
             MailingAddress = request.MailingAddress,
-            //沒有填寫第二個通訊地址則帶入主要通訊地址
             ResidentialAddress = ChkResidentialAddress(request.ResidentialAddress, request.MailingAddress),
             CreatedAt = DateTime.Now
         };
@@ -44,12 +45,13 @@ public class MemberService : IMemberService
             member.CreatedAt);
     }
 
-    private static string HashPassword(string password)
+    public static string HashPassword(string password, string? salt = null)
     {
-        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+        var input = salt is null ? password : salt + password;
+        var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(input));
         return Convert.ToHexString(bytes).ToLowerInvariant();
     }
-    // 如果戶籍地址為空或 Null，就回傳通訊地址，否則回傳原本的戶籍地址
+
     public string ChkResidentialAddress(string ResidentialAddress, string mailingAddress)
     {
         return string.IsNullOrEmpty(ResidentialAddress) ? mailingAddress : ResidentialAddress;

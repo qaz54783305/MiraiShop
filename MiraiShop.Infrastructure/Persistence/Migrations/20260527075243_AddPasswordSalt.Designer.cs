@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiraiShop.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using MiraiShop.Infrastructure.Persistence;
 namespace MiraiShop.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(MiraiShopDbContext))]
-    partial class MiraiShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260527075243_AddPasswordSalt")]
+    partial class AddPasswordSalt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

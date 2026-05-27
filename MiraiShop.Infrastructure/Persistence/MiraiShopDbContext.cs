@@ -33,6 +33,8 @@ public class MiraiShopDbContext : DbContext
             entity.Property(m => m.PasswordHash)
                   .IsRequired();
 
+            entity.Property(m => m.PasswordSalt);
+
             entity.Property(m => m.MailingAddress)
                   .IsRequired();
 

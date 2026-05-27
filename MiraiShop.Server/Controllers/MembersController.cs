@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MiraiShop.Application.DTOs;
 using MiraiShop.Application.Interfaces;
-using System.Diagnostics;
 
 namespace MiraiShop.Server.Controllers;
 
@@ -9,11 +9,13 @@ namespace MiraiShop.Server.Controllers;
 [Route("api/[controller]")]
 public class MembersController : ControllerBase
 {
-    private readonly IMemberService _service;
+    private readonly IMemberService _memberService;
+    private readonly IAuthService _authService;
 
-    public MembersController(IMemberService service)
+    public MembersController(IMemberService memberService, IAuthService authService)
     {
-        _service = service;
+        _memberService = memberService;
+        _authService = authService;
     }
 
     [HttpPost("register")]
@@ -21,13 +23,23 @@ public class MembersController : ControllerBase
     {
         try
         {
-            var result = _service.Register(request);
-            Debug.WriteLine("result===" + result);
+            var result = _memberService.Register(request);
             return CreatedAtAction(nameof(Register), result);
         }
         catch (InvalidOperationException ex)
         {
             return Conflict(new { error = ex.Message });
         }
+    }
+
+    [HttpPost("login")]
+    [EnableRateLimiting("login")]
+    public ActionResult<LoginResponse> Login([FromBody] LoginRequest request)
+    {
+        var result = _authService.Login(request);
+        if (result is null)
+            return Unauthorized(new { error = "電子信箱或密碼錯誤" });
+
+        return Ok(result);
     }
 }

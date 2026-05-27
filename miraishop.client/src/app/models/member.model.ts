@@ -1,3 +1,14 @@
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  expiry: string;
+  memberId: string;
+}
+
 export interface RegisterMemberRequest {
   name: string;
   email: string;

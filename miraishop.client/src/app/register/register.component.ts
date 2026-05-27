@@ -19,7 +19,7 @@ export class RegisterComponent {
       email:              ['', [Validators.required, Validators.email]],
       password:           ['', [Validators.required]],
       mailingAddress:     ['', [Validators.required, Validators.minLength(5)]],
-      residentialAddress: ['', [Validators.required, Validators.minLength(5)]]
+      residentialAddress: ['']
     });
   }
 

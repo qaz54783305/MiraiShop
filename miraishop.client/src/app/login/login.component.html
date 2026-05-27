@@ -1,0 +1,46 @@
+<div class="login-container">
+  <h2>會員登入</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="email">電子信箱</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="請輸入電子信箱"
+        autocomplete="email"
+      />
+      <div class="error-msg" *ngIf="email.invalid && email.touched">
+        <span *ngIf="email.errors?.['required']">此欄位為必填</span>
+        <span *ngIf="email.errors?.['email']">請輸入有效的電子信箱格式</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">密碼</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="請輸入密碼"
+        autocomplete="current-password"
+      />
+      <div class="error-msg" *ngIf="password.invalid && password.touched">
+        <span *ngIf="password.errors?.['required']">此欄位為必填</span>
+      </div>
+    </div>
+
+    <div class="api-error" *ngIf="apiError">{{ apiError }}</div>
+
+    <button type="submit" [disabled]="isLoading">
+      {{ isLoading ? '登入中...' : '登入' }}
+    </button>
+
+  </form>
+
+  <p class="register-link">
+    還沒有帳號？<a routerLink="/register">前往註冊</a>
+  </p>
+</div>
