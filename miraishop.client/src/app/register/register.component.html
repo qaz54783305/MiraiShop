@@ -24,6 +24,14 @@
       <span class="error-msg">{{ getError('password') }}</span>
     </div>
 
+
+    <div class="field">
+      <label for="secondPassword">再輸入一次密碼 <span class="required">*</span></label>
+      <input id="secondPassword" type="password" formControlName="secondPassword" />
+      <span class="error-msg">{{ getError('secondPassword') }}</span>
+    </div>
+
+
     <div class="field">
       <label for="mailingAddress">通訊地址 </label>
       <input id="mailingAddress" type="text" formControlName="mailingAddress" />
