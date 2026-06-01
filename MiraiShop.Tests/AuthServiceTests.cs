@@ -17,17 +17,7 @@ public class AuthServiceTests
     private const string TestPassword = "MyP@ssword123";
     private const string TestSalt = "testsalt123";
 
-    public AuthServiceTests()
-    {
-        _repositoryMock = new Mock<IMemberRepository>();
-        _jwtSettings = new JwtSettings(
-            SecretKey: "TestSecretKeyMustBeAtLeast32CharactersLong!",
-            Issuer: "MiraiShop",
-            Audience: "MiraiShop",
-            ExpiryMinutes: 60);
-        _service = new AuthService(_repositoryMock.Object, _jwtSettings);
-    }
-
+  
     private Member CreateMember(string password, string? salt = TestSalt) => new()
     {
         Id = Guid.NewGuid(),

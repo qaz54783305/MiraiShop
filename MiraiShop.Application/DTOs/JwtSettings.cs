@@ -4,4 +4,5 @@ public record JwtSettings(
     string SecretKey,
     string Issuer,
     string Audience,
-    int ExpiryMinutes);
+    int ExpiryMinutes,
+    string[] AdminEmails);
