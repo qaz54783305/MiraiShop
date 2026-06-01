@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
   isLoggedIn = false;
   isAdmin = false;
+  isLoginPage = false;
   title = 'miraishop.client';
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -30,7 +31,10 @@ export class AppComponent implements OnInit {
     // 每次路由變換後重新判斷（登入/登出後更新 header）
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
-    ).subscribe(() => this.updateAuthState());
+    ).subscribe((e) => {
+      this.isLoginPage = (e as NavigationEnd).urlAfterRedirects === '/login';
+      this.updateAuthState();
+    });
   }
 
   private updateAuthState(): void {

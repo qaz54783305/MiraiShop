@@ -1,8 +1,7 @@
-﻿<nav class="app-nav">
+﻿<nav class="app-nav" *ngIf="!isLoginPage">
   <span class="brand">MiraiShop</span>
   <a *ngIf="isAdmin" routerLink="/admin/products" routerLinkActive="active">上傳/下載</a>
   <div class="spacer"></div>
-  <a *ngIf="!isLoggedIn" routerLink="/register" routerLinkActive="active">會員註冊</a>
 </nav>
 
 <router-outlet></router-outlet>

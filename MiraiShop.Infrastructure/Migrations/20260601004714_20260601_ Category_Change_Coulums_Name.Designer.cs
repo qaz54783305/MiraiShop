@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiraiShop.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace MiraiShop.Infrastructure.Persistence.Migrations
+namespace MiraiShop.Infrastructure.Migrations
 {
     [DbContext(typeof(MiraiShopDbContext))]
-    partial class MiraiShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260601004714_20260601_ Category_Change_Coulums_Name")]
+    partial class _20260601_Category_Change_Coulums_Name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
