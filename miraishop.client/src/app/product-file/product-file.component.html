@@ -1,0 +1,61 @@
+<div class="page-container">
+  <div class="card">
+    <h2 class="card-title">商品資料維護</h2>
+
+    <!-- 下載範本 -->
+    <section class="section">
+      <h3 class="section-title">步驟 1：下載 Excel 範本</h3>
+      <p class="hint">下載範本後，依照欄位說明填寫商品資料，完成後於步驟 2 上傳。</p>
+      <button class="btn btn-outline" (click)="downloadTemplate()">
+        ⬇ 下載商品匯入範本
+      </button>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- 上傳 -->
+    <section class="section">
+      <h3 class="section-title">步驟 2：上傳填寫完成的 Excel</h3>
+
+      <div class="file-drop">
+        <label for="file-input" class="file-label">
+          <span *ngIf="!selectedFile">點擊選擇 .xlsx 檔案</span>
+          <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+        </label>
+        <input
+          id="file-input"
+          type="file"
+          accept=".xlsx,.numbers,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.apple.numbers"
+          (change)="onFileSelected($event)"
+          class="file-input"
+        />
+      </div>
+
+      <button
+        class="btn btn-primary"
+        [disabled]="!selectedFile || uploadState === 'uploading'"
+        (click)="upload()"
+      >
+        {{ uploadState === 'uploading' ? '上傳中...' : '開始上傳' }}
+      </button>
+    </section>
+
+    <!-- 結果 -->
+    <section class="result-section" *ngIf="uploadResult">
+      <div class="result-banner" [class.has-error]="uploadResult.failCount > 0">
+        <div class="result-stats">
+          <span class="stat success">✔ 成功匯入：{{ uploadResult.successCount }} 筆</span>
+          <span class="stat error" *ngIf="uploadResult.failCount > 0">✘ 失敗：{{ uploadResult.failCount }} 筆</span>
+        </div>
+      </div>
+
+      <ul class="error-list" *ngIf="uploadResult.errors.length > 0">
+        <li *ngFor="let err of uploadResult.errors">{{ err }}</li>
+      </ul>
+    </section>
+
+    <div class="api-error" *ngIf="uploadState === 'error' && !uploadResult">
+      {{ uploadErrorMsg }}
+    </div>
+  </div>
+</div>

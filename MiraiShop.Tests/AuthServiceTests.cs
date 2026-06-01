@@ -21,10 +21,11 @@ public class AuthServiceTests
     {
         _repositoryMock = new Mock<IMemberRepository>();
         _jwtSettings = new JwtSettings(
-            SecretKey: "TestSecretKeyMustBeAtLeast32CharactersLong!",
-            Issuer: "MiraiShop",
-            Audience: "MiraiShop",
-            ExpiryMinutes: 60);
+            SecretKey: "TestSecretKey-Must-Be-At-Least-32-Chars!!",
+            Issuer: "TestIssuer",
+            Audience: "TestAudience",
+            ExpiryMinutes: 60,
+            AdminEmails: []);
         _service = new AuthService(_repositoryMock.Object, _jwtSettings);
     }
 

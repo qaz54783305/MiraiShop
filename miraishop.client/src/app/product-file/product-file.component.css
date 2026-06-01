@@ -1,0 +1,163 @@
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 16px;
+  background: #f5f7fa;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  padding: 40px 48px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f497d;
+  margin: 0 0 32px;
+}
+
+.section {
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px;
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0 0 16px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e8eaf0;
+  margin: 28px 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 2px solid #2e75b6;
+  color: #2e75b6;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: #eef4fb;
+}
+
+.btn-primary {
+  background: #2e75b6;
+  color: #fff;
+  margin-top: 16px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1f5ea0;
+}
+
+/* File picker */
+.file-drop {
+  border: 2px dashed #c5d5e8;
+  border-radius: 8px;
+  padding: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.file-drop:hover {
+  border-color: #2e75b6;
+  background: #f0f6fd;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  cursor: pointer;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.file-name {
+  color: #2e75b6;
+  font-weight: 600;
+}
+
+/* Result */
+.result-section {
+  margin-top: 28px;
+}
+
+.result-banner {
+  background: #e9f7ef;
+  border: 1px solid #a8d5b5;
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.result-banner.has-error {
+  background: #fef9e7;
+  border-color: #f0c040;
+}
+
+.result-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.stat.success { color: #27ae60; }
+.stat.error   { color: #c0392b; }
+
+.error-list {
+  margin: 12px 0 0;
+  padding: 0 0 0 20px;
+  color: #c0392b;
+  font-size: 0.85rem;
+  list-style: disc;
+}
+
+.error-list li {
+  margin-bottom: 4px;
+}
+
+.api-error {
+  margin-top: 16px;
+  color: #c0392b;
+  font-size: 0.875rem;
+}

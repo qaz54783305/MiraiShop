@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "angular-client",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["ng", "serve", "--port", "4200", "--host", "127.0.0.1"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["miraishop.client/node_modules/.bin/ng", "serve", "--port", "4200", "--host", "127.0.0.1"],
       "port": 4200
     }
   ]

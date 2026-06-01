@@ -10,7 +10,10 @@
 .app-nav .brand {
   font-weight: 700;
   font-size: 1.2rem;
-  margin-right: auto;
+}
+
+.spacer {
+  flex: 1;
 }
 
 .app-nav a {
