@@ -90,7 +90,7 @@ public class MiraiShopDbContext : DbContext
             entity.HasIndex(c => c.CategoryCode)
                   .IsUnique();
 
-            entity.Property(c => c.Name)
+            entity.Property(c => c.CategoryName)
                   .IsRequired();
         });
 

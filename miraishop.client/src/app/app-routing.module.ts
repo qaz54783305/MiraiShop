@@ -6,6 +6,7 @@ import { ProductFileComponent } from './product-file/product-file.component';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin/products', component: ProductFileComponent, canActivate: [AdminGuard] }
