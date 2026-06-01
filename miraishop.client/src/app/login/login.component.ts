@@ -42,11 +42,7 @@ export class LoginComponent {
           memberId: response.memberId
         }));
         this.isLoading = false;
-        const auth = JSON.parse(localStorage.getItem('miraishop_auth')!);
-        const payload = JSON.parse(atob(auth.token.split('.')[1]));
-        const role = payload['role'] ?? payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        const isAdmin = Array.isArray(role) ? role.includes('Admin') : role === 'Admin';
-        this.router.navigate([isAdmin ? '/admin/products' : '/register']);
+        this.router.navigate(['/welcome']);
       },
       error: (err) => {
         this.apiError = err.error?.error ?? '登入失敗，請稍後再試';

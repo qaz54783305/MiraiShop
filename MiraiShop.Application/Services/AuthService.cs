@@ -31,12 +31,12 @@ public class AuthService : IAuthService
 
         var expiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
         var isAdmin = _jwtSettings.AdminEmails.Contains(member.Email, StringComparer.OrdinalIgnoreCase);
-        var token = GenerateToken(member.Id, member.Email, isAdmin, expiry);
+        var token = GenerateToken(member.Id, member.Email, member.Name, isAdmin, expiry);
 
         return new LoginResponse(token, expiry, member.Id);
     }
 
-    private string GenerateToken(Guid memberId, string email, bool isAdmin, DateTime expiry)
+    private string GenerateToken(Guid memberId, string email, string name, bool isAdmin, DateTime expiry)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -45,6 +45,7 @@ public class AuthService : IAuthService
         {
             new Claim(JwtRegisteredClaimNames.Sub, memberId.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, email),
+            new Claim(JwtRegisteredClaimNames.Name, name),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

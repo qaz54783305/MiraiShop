@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MemberService } from '../services/member.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class RegisterComponent {
   errorMessage = '';
   isSubmitting = false;
 
-  constructor(private fb: FormBuilder, private memberService: MemberService) {
+  constructor(private fb: FormBuilder, private memberService: MemberService, private router: Router) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -21,7 +22,7 @@ export class RegisterComponent {
       secondPassword: ['', Validators.required],
       mailingAddress: ['', [Validators.required, Validators.minLength(5)]],
       residentialAddress: ['']
-    }, { validators: this.passwordMatchValidator });  // ← 加這行
+    }, { validators: this.passwordMatchValidator })
   }
 
   onSubmit(): void {
@@ -33,9 +34,18 @@ export class RegisterComponent {
 
     this.memberService.register(this.form.value).subscribe({
       next: () => {
-        this.successMessage = '註冊成功！歡迎加入 MiraiShop。';
-        this.form.reset();
-        this.isSubmitting = false;
+        setTimeout(() => {
+
+          this.successMessage = '即將跳轉至登入...';
+        }, 3000);
+        //this.successMessage = '註冊成功！歡迎加入 MiraiShop。';
+       // this.form.reset();
+        //this.isSubmitting = false;
+       //倒數三秒
+        setTimeout(() => {
+
+          this.router.navigate(['/login']);
+        }, 3000);
       },
       error: (err) => {
         if (err.status === 409) {
