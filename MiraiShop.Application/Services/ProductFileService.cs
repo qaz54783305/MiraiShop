@@ -16,7 +16,7 @@ public class ProductFileService : IProductFileService
     // 欄位定義：(欄位名稱, 說明, 範例值, 是否必填)
     private static readonly (string Header, string Description, object Example, bool Required)[] Columns =
     [
-        ("CategoryCode", "分類代碼（需與系統中既有的 Category 相符）", "ELEC", true),
+        ("CategoryCode", "分類代碼（需與系統中既有的 Category 相符）", "P01", true),
         ("Name",         "商品名稱",                                   "藍牙耳機",    true),
         ("Price",        "售價（大於等於 0 的數字）",                  299.00m,       true),
         ("Stock",        "庫存數量（大於等於 0 的整數）",              50,            true),

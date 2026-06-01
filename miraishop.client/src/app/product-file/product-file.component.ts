@@ -49,7 +49,6 @@ export class ProductFileComponent {
 
   upload(): void {
     if (!this.selectedFile) return;
-
     this.uploadState = 'uploading';
     this.uploadResult = null;
 
@@ -57,12 +56,14 @@ export class ProductFileComponent {
       next: (result) => {
         this.uploadResult = result;
         this.uploadState = result.failCount > 0 && result.successCount === 0 ? 'error' : 'success';
-        this.selectedFile = null;
+        //即使上傳失敗也要打開按鈕
+        //this.selectedFile = null;
       },
       error: (err) => {
         this.uploadErrorMsg = err.error?.error ?? '上傳失敗，請稍後再試';
         this.uploadState = 'error';
       }
+
     });
   }
 }

@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProductFileComponent } from './product-file/product-file.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ProductFileComponent
+    ProductFileComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, ReactiveFormsModule,
