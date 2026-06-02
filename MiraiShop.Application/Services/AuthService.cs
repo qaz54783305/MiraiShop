@@ -28,8 +28,7 @@ public class AuthService : IAuthService
         var inputHash = MemberService.HashPassword(request.Password, member.PasswordSalt);
         if (inputHash != member.PasswordHash)
             return null;
-
-        var expiry = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
+        var expiry = DateTime.Now.AddMinutes(_jwtSettings.ExpiryMinutes);
         var isAdmin = _jwtSettings.AdminEmails.Contains(member.Email, StringComparer.OrdinalIgnoreCase);
         var token = GenerateToken(member.Id, member.Email, member.Name, isAdmin, expiry);
 
