@@ -9,6 +9,7 @@ type UploadState = 'idle' | 'uploading' | 'success' | 'error';
   styleUrls: ['./product-file.component.css']
 })
 export class ProductFileComponent {
+  activePanel: string | null = null;
   selectedFile: File | null = null;
   uploadState: UploadState = 'idle';
   uploadResult: UploadProductResponse | null = null;

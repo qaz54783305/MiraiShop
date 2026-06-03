@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AUTH_STORAGE_KEY } from '../interceptors/auth.interceptor';
 
+
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -28,5 +29,11 @@ export class WelcomeComponent {
 
   get memberName(): string  { return this.jwtPayload['name']  ?? ''; }
   get memberEmail(): string { return this.jwtPayload['email'] ?? ''; }
+
+  get isAdmin(): boolean {
+    const role = (this.jwtPayload as Record<string, unknown>)['role']
+      ?? (this.jwtPayload as Record<string, unknown>)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    return Array.isArray(role) ? role.includes('Admin') : role === 'Admin';
+  }
 
 }

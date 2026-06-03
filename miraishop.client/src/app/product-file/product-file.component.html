@@ -1,61 +1,159 @@
-<div class="page-container">
-  <div class="card">
-    <h2 class="card-title">商品資料維護</h2>
+<!-- 後台儀表板 -->
+<div class="admin-page" *ngIf="!activePanel">
 
-    <!-- 下載範本 -->
-    <section class="section">
-      <h3 class="section-title">步驟 1：下載 Excel 範本</h3>
-      <p class="hint">下載範本後，依照欄位說明填寫商品資料，完成後於步驟 2 上傳。</p>
-      <button class="btn btn-outline" (click)="downloadTemplate()">
-        ⬇ 下載商品匯入範本
-      </button>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- 上傳 -->
-    <section class="section">
-      <h3 class="section-title">步驟 2：上傳填寫完成的 Excel</h3>
-
-      <div class="file-drop">
-        <label for="file-input" class="file-label">
-          <span *ngIf="!selectedFile">點擊選擇 .xlsx 檔案</span>
-          <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
-        </label>
-        <input
-          id="file-input"
-          type="file"
-          accept=".xlsx,.numbers,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.apple.numbers"
-          (change)="onFileSelected($event)"
-          class="file-input"
-        />
+  <!-- Topbar -->
+  <div class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <div class="admin-breadcrumb">
+        <a href="/welcome" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          返回商城
+        </a>
+        <span class="breadcrumb-sep">/</span>
+        <span>管理員後台</span>
       </div>
+    </div>
+  </div>
 
-      <button
-        class="btn btn-primary"
-        [disabled]="!selectedFile || uploadState === 'uploading'"
-        (click)="upload()"
-      >
-        {{ uploadState === 'uploading' ? '上傳中...' : '開始上傳' }}
-      </button>
-    </section>
+  <!-- Dashboard -->
+  <div class="admin-content">
+    <div class="dashboard-header">
+      <h1>管理員後台</h1>
+      <p>選擇下方功能模組開始操作</p>
+    </div>
 
-    <!-- 結果 -->
-    <section class="result-section" *ngIf="uploadResult">
-      <div class="result-banner" [class.has-error]="uploadResult.failCount > 0">
-        <div class="result-stats">
-          <span class="stat success">✔ 成功匯入：{{ uploadResult.successCount }} 筆</span>
-          <span class="stat error" *ngIf="uploadResult.failCount > 0">✘ 失敗：{{ uploadResult.failCount }} 筆</span>
+    <div class="function-grid">
+
+      <!-- 商品管理 -->
+      <div class="func-card" (click)="activePanel = 'product'">
+        <div class="func-icon purple">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
         </div>
+        <div class="func-body">
+          <h3>商品管理</h3>
+          <p>批次匯入商品資料、下載匯入範本</p>
+        </div>
+        <svg class="func-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
       </div>
 
-      <ul class="error-list" *ngIf="uploadResult.errors.length > 0">
-        <li *ngFor="let err of uploadResult.errors">{{ err }}</li>
-      </ul>
-    </section>
+      <!-- 訂單管理（預留） -->
+      <div class="func-card disabled">
+        <div class="func-icon blue">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+        </div>
+        <div class="func-body">
+          <h3>訂單管理 <span class="coming-soon">即將推出</span></h3>
+          <p>查看、處理所有訂單狀態</p>
+        </div>
+        <svg class="func-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
 
-    <div class="api-error" *ngIf="uploadState === 'error' && !uploadResult">
-      {{ uploadErrorMsg }}
+      <!-- 會員管理（預留） -->
+      <div class="func-card disabled">
+        <div class="func-icon green">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div class="func-body">
+          <h3>會員管理 <span class="coming-soon">即將推出</span></h3>
+          <p>查看會員列表、管理帳號權限</p>
+        </div>
+        <svg class="func-arrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 商品管理子頁面 -->
+<div class="admin-page" *ngIf="activePanel === 'product'">
+
+  <div class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <div class="admin-breadcrumb">
+        <a href="/welcome" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          返回商城
+        </a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="back-link" style="cursor:pointer" (click)="activePanel = null">管理員後台</span>
+        <span class="breadcrumb-sep">/</span>
+        <span>商品管理</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="dashboard-header">
+      <h1>商品管理</h1>
+      <p>下載範本填寫完成後，上傳即可批次匯入商品資料</p>
+    </div>
+
+    <div class="card">
+      <!-- 下載範本 -->
+      <section class="section">
+        <h3 class="section-title">步驟 1：下載 Excel 範本</h3>
+        <p class="hint">下載範本後，依照欄位說明填寫商品資料，完成後於步驟 2 上傳。</p>
+        <button class="btn btn-outline" (click)="downloadTemplate()">
+          ⬇ 下載商品匯入範本
+        </button>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- 上傳 -->
+      <section class="section">
+        <h3 class="section-title">步驟 2：上傳填寫完成的 Excel</h3>
+        <div class="file-drop">
+          <label for="file-input" class="file-label">
+            <span *ngIf="!selectedFile">點擊選擇 .xlsx 檔案</span>
+            <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+          </label>
+          <input id="file-input" type="file"
+            accept=".xlsx,.numbers,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.apple.numbers"
+            (change)="onFileSelected($event)" class="file-input"/>
+        </div>
+        <button class="btn btn-primary"
+          [disabled]="!selectedFile || uploadState === 'uploading'"
+          (click)="upload()">
+          {{ uploadState === 'uploading' ? '上傳中...' : '開始上傳' }}
+        </button>
+      </section>
+
+      <!-- 結果 -->
+      <section class="result-section" *ngIf="uploadResult">
+        <div class="result-banner" [class.has-error]="uploadResult.failCount > 0">
+          <div class="result-stats">
+            <span class="stat success">✔ 成功匯入：{{ uploadResult.successCount }} 筆</span>
+            <span class="stat error" *ngIf="uploadResult.failCount > 0">✘ 失敗：{{ uploadResult.failCount }} 筆</span>
+          </div>
+        </div>
+        <ul class="error-list" *ngIf="uploadResult.errors.length > 0">
+          <li *ngFor="let err of uploadResult.errors">{{ err }}</li>
+        </ul>
+      </section>
+
+      <div class="api-error" *ngIf="uploadState === 'error' && !uploadResult">
+        {{ uploadErrorMsg }}
+      </div>
     </div>
   </div>
 </div>
