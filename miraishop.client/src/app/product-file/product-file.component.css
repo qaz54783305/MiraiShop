@@ -1,163 +1,215 @@
-.page-container {
+/* ── Base ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.admin-page {
   min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 48px 16px;
-  background: #f5f7fa;
+  background: #f4f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* ── Topbar ── */
+.admin-topbar {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+}
+.admin-topbar-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+.admin-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4f46e5;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.back-link:hover { opacity: 0.75; }
+.breadcrumb-sep { color: #d1d5db; }
+
+/* ── Content ── */
+.admin-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+.dashboard-header {
+  margin-bottom: 32px;
+}
+.dashboard-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+.dashboard-header p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ── Function Cards Grid ── */
+.function-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.func-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+}
+.func-card:hover:not(.disabled) {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+  border-color: #c7d2fe;
+}
+.func-card.disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.func-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.func-icon.purple { background: #ede9fe; color: #4f46e5; }
+.func-icon.blue   { background: #dbeafe; color: #2563eb; }
+.func-icon.green  { background: #d1fae5; color: #059669; }
+
+.func-body {
+  flex: 1;
+  min-width: 0;
+}
+.func-body h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.func-body p {
+  font-size: 13px;
+  color: #6b7280;
+}
+.coming-soon {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+.func-arrow { color: #d1d5db; flex-shrink: 0; }
+
+/* ── Product Upload Card ── */
 .card {
   background: #fff;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-  padding: 40px 48px;
-  width: 100%;
+  padding: 36px 40px;
   max-width: 600px;
 }
-
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1f497d;
-  margin: 0 0 32px;
-}
-
-.section {
+.section { margin-bottom: 8px; }
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
   margin-bottom: 8px;
 }
-
-.section-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  margin: 0 0 8px;
-}
-
 .hint {
-  font-size: 0.875rem;
-  color: #666;
-  margin: 0 0 16px;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 16px;
+  line-height: 1.6;
 }
-
 .divider {
   border: none;
-  border-top: 1px solid #e8eaf0;
-  margin: 28px 0;
+  border-top: 1px solid #e5e7eb;
+  margin: 24px 0;
 }
 
 /* Buttons */
 .btn {
   display: inline-block;
-  padding: 10px 24px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   border: none;
   transition: opacity 0.15s, background 0.15s;
 }
-
-.btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
 .btn-outline {
   background: #fff;
-  border: 2px solid #2e75b6;
-  color: #2e75b6;
+  border: 1px solid #d1d5db;
+  color: #374151;
 }
-
-.btn-outline:hover:not(:disabled) {
-  background: #eef4fb;
-}
-
+.btn-outline:hover:not(:disabled) { background: #f3f4f6; }
 .btn-primary {
-  background: #2e75b6;
+  background: #4f46e5;
   color: #fff;
   margin-top: 16px;
 }
-
-.btn-primary:hover:not(:disabled) {
-  background: #1f5ea0;
-}
+.btn-primary:hover:not(:disabled) { background: #4338ca; }
 
 /* File picker */
 .file-drop {
-  border: 2px dashed #c5d5e8;
+  border: 2px dashed #e5e7eb;
   border-radius: 8px;
   padding: 28px;
   text-align: center;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
 }
-
-.file-drop:hover {
-  border-color: #2e75b6;
-  background: #f0f6fd;
-}
-
-.file-input {
-  display: none;
-}
-
-.file-label {
-  cursor: pointer;
-  color: #555;
-  font-size: 0.9rem;
-}
-
-.file-name {
-  color: #2e75b6;
-  font-weight: 600;
-}
+.file-drop:hover { border-color: #4f46e5; background: #f5f3ff; }
+.file-input { display: none; }
+.file-label { cursor: pointer; color: #6b7280; font-size: 14px; }
+.file-name  { color: #4f46e5; font-weight: 600; }
 
 /* Result */
-.result-section {
-  margin-top: 28px;
-}
-
+.result-section { margin-top: 24px; }
 .result-banner {
-  background: #e9f7ef;
-  border: 1px solid #a8d5b5;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
   border-radius: 8px;
-  padding: 16px 20px;
+  padding: 14px 18px;
 }
-
-.result-banner.has-error {
-  background: #fef9e7;
-  border-color: #f0c040;
-}
-
-.result-stats {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.stat {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.stat.success { color: #27ae60; }
-.stat.error   { color: #c0392b; }
-
+.result-banner.has-error { background: #fefce8; border-color: #fde68a; }
+.result-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+.stat { font-size: 13px; font-weight: 600; }
+.stat.success { color: #059669; }
+.stat.error   { color: #dc2626; }
 .error-list {
-  margin: 12px 0 0;
-  padding: 0 0 0 20px;
-  color: #c0392b;
-  font-size: 0.85rem;
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: #dc2626;
+  font-size: 13px;
   list-style: disc;
 }
-
-.error-list li {
-  margin-bottom: 4px;
-}
-
-.api-error {
-  margin-top: 16px;
-  color: #c0392b;
-  font-size: 0.875rem;
-}
+.error-list li { margin-bottom: 4px; }
+.api-error { margin-top: 14px; color: #dc2626; font-size: 13px; }

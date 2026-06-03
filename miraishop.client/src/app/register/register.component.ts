@@ -29,21 +29,15 @@ export class RegisterComponent {
     if (this.form.invalid) return;
 
     this.isSubmitting = true;
-    this.successMessage = '';
+    this.successMessage = '即將跳轉至登入...';
     this.errorMessage = '';
 
     this.memberService.register(this.form.value).subscribe({
       next: () => {
-        setTimeout(() => {
-
-          this.successMessage = '即將跳轉至登入...';
-        }, 3000);
         //this.successMessage = '註冊成功！歡迎加入 MiraiShop。';
        // this.form.reset();
         //this.isSubmitting = false;
-       //倒數三秒
         setTimeout(() => {
-
           this.router.navigate(['/login']);
         }, 3000);
       },
