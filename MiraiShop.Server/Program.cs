@@ -63,7 +63,12 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductFileService, ProductFileService>();
-
+//builder.Services.AddScoped<ILinePayService, LinePayService>();
+// LinePay Settings
+var linePaySettings = builder.Configuration.GetSection("LinePay").Get<LinePaySettings>()!;
+builder.Services.AddSingleton(linePaySettings);
+//builder.Services.AddScoped<ILinePayService, LinePayService>();
+builder.Services.AddScoped<ILinePayService, MockLinePayService>();
 var app = builder.Build();
 
 app.UseDefaultFiles();
@@ -83,3 +88,4 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 app.Run();
+
