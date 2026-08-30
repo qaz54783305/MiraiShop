@@ -186,6 +186,81 @@ Swagger UI：`https://localhost:7140/swagger`
 
 ---
 
+## 容器化環境（Docker）
+
+專案提供 [Dockerfile](Dockerfile) 與 [docker-compose.yml](docker-compose.yml)，可以把 API（含已 build 好的前端）與 SQL Server 一次啟動，不需要在本機安裝 SQL Server。
+
+### 環境變數設定
+
+**為什麼要有 `.env`：** 密碼、連線字串這類機敏資訊不能寫死進 `docker-compose.yml` 或 commit 進 git（一旦推上遠端就永久留在 commit 歷史裡，很難徹底清除）。做法是把設定值抽成環境變數，實際的值放在**不進版控**的 `.env` 檔案裡。
+
+專案裡有兩個相關檔案：
+
+| 檔案 | 用途 | 有沒有進 git |
+|---|---|---|
+| `.env.example` | 範本，列出需要哪些變數、給預設/範例值 | ✅ 有，讓每個人都知道要設定什麼 |
+| `.env` | 你自己實際在用的值 | ❌ 沒有（已加入 [.gitignore](.gitignore)），每個人（每台電腦）各自一份 |
+
+`docker-compose.yml` 會自動讀取專案根目錄的 `.env`，把裡面的變數代入 `${...}` 的地方，例如：
+
+```yaml
+environment:
+  MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+```
+
+**第一次設定步驟：**
+
+```bash
+# 1. 複製範本，產生自己的 .env
+cp .env.example .env
+
+# 2. 打開 .env，把密碼改成自己的（SQL Server 要求至少 8 碼，
+#    且需包含大寫、小寫、數字、符號 四類中至少 3 類）
+```
+
+目前 `.env` 需要設定的變數：
+
+| 變數名稱 | 用途 | 範例值 |
+|---|---|---|
+| `MSSQL_SA_PASSWORD` | SQL Server `sa` 帳號的密碼，`mssql` 與 `api` 兩個容器都會用到（`api` 用它組出連線字串） | `YourPassword123!` |
+
+> **注意：** 每個人的 `.env` 密碼可以不一樣，因為 `mssql` 容器第一次啟動時會用 `.env` 裡的密碼初始化資料庫，之後密碼就固定在該容器的資料裡（存在 `mssql-data` volume）。如果之後要換密碼，除了改 `.env`，通常也要把容器連同 volume 一起重建（`docker compose down -v` 後再 `up`），否則新密碼不會生效、會出現登入失敗。
+
+### 啟動方式
+
+```bash
+# 啟動資料庫 + API
+docker compose up -d
+
+# 建立資料庫結構（第一次啟動，或有新的 migration 時執行）
+./run-migration.sh
+
+# 瀏覽器打開
+open http://localhost:8080
+```
+
+### 程式碼有改動時
+
+容器裡是「打包當下」的檔案，不會自動感應原始碼變更，改完程式碼要重新 build image：
+
+```bash
+docker compose up -d --build api
+```
+
+只改 `.env`（例如密碼）或 migration，不需要 `--build`，重啟或重跑 `run-migration.sh` 即可。
+
+### 常用指令
+
+| 指令 | 用途 |
+|---|---|
+| `docker compose up -d` | 啟動所有服務（背景執行） |
+| `docker compose up -d --build api` | 重新 build 並替換 `api` 容器 |
+| `docker compose down` | 停止並移除容器（保留資料庫 volume） |
+| `docker compose logs -f api` | 即時查看 API 的 log |
+| `docker exec -it miraishop-mssql /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '<密碼>' -C` | 進到資料庫容器裡下 SQL 指令 |
+
+---
+
 ## 技術堆疊
 
 | 類別 | 技術 |

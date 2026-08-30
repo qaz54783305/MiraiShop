@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.angular/
+**/.vs/
+**/.idea/
+.git/
+.github/
+docs/
+specs/
+**/*.md
