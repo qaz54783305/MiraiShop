@@ -1,0 +1,37 @@
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64 # Apple Silicon 需要模擬 amd64，效能會較差
+    container_name: miraishop-mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    restart: unless-stopped
+    networks:
+      - miraishop-net
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: miraishop-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__DefaultConnection: "Server=mssql;Database=MiraiShop;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mssql
+    networks:
+      - miraishop-net
+
+volumes:
+  mssql-data:
+
+networks:
+  miraishop-net:

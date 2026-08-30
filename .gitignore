@@ -364,3 +364,6 @@ FodyWeavers.xsd.DS_Store
 .idea/
 .DS_Store
 .idea/
+
+# Local secrets
+.env
