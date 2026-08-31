@@ -10,7 +10,9 @@ using MiraiShop.Application.Services;
 using MiraiShop.Domain.Interfaces;
 using MiraiShop.Infrastructure.Persistence;
 using MiraiShop.Infrastructure.Repositories;
-
+using DotNetEnv;
+// 必須放在 CreateBuilder 之前
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
