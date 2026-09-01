@@ -10,16 +10,17 @@ namespace MiraiShop.Server.Controllers;
 public class LinePayController : ControllerBase
 {
     private readonly ILinePayService _linePayService;
+    private readonly IOrderService _orderService;
 
-    public LinePayController(ILinePayService linePayService)
+    public LinePayController(ILinePayService linePayService, IOrderService orderService)
     {
         _linePayService = linePayService;
+        _orderService = orderService;
     }
 
     [HttpPost("request")]
     [Authorize]
-    public async Task<ActionResult<LinePayRequestResponse>> RequestPayment(
-        [FromBody] LinePayRequestRequest request)
+    public async Task<ActionResult<LinePayRequestResponse>> RequestPayment( [FromBody] LinePayRequest request)
     {
         try
         {
@@ -33,16 +34,20 @@ public class LinePayController : ControllerBase
     }
 
     [HttpGet("confirm")]
-    public async Task<IActionResult> Confirm(
-        [FromQuery] string transactionId,
-        [FromQuery] string orderId)
+    public async Task<IActionResult> Confirm([FromQuery] string transactionId, [FromQuery] string orderId)
     {
         if (string.IsNullOrWhiteSpace(transactionId) || string.IsNullOrWhiteSpace(orderId))
-            return BadRequest(new { error = "缺少 transactionId 或 orderId" });
-
+            return BadRequest(new { error = "缺少 transactionId或orderId " });
         try
         {
-            var result = await _linePayService.ConfirmPaymentAsync(transactionId, orderId);
+            var order = await _orderService.GetOrderByIdAsync(orderId);
+            if (order == null)
+                return BadRequest(new { error = "找不到訂單" });
+
+            var confirmRequest = new LinePayConfirmRequest(
+                Amount: order.TotalAmount,
+                Currency: order.Currency);
+            var result = await _linePayService.ConfirmPaymentAsync(transactionId, confirmRequest);
             return Ok(result);
         }
         catch (InvalidOperationException ex)

@@ -10,7 +10,9 @@ using MiraiShop.Application.Services;
 using MiraiShop.Domain.Interfaces;
 using MiraiShop.Infrastructure.Persistence;
 using MiraiShop.Infrastructure.Repositories;
-
+using DotNetEnv;
+// 必須放在 CreateBuilder 之前
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -69,6 +71,7 @@ var linePaySettings = builder.Configuration.GetSection("LinePay").Get<LinePaySet
 builder.Services.AddSingleton(linePaySettings);
 //builder.Services.AddScoped<ILinePayService, LinePayService>();
 builder.Services.AddScoped<ILinePayService, MockLinePayService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 var app = builder.Build();
 
 app.UseDefaultFiles();
