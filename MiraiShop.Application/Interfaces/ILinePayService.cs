@@ -1,8 +1,9 @@
 using MiraiShop.Application.DTOs;
-namespace MiraiShop.Application.Interfaces;
 
+namespace MiraiShop.Application.Interfaces;
 public interface ILinePayService
 {
-    Task<LinePayRequestResponse> RequestPaymentAsync(LinePayRequestRequest request);
-    Task<LinePayConfirmResponse> ConfirmPaymentAsync(string transactionId, string orderId);
+  //請款＆確款
+  Task<LinePayRequestResponse> RequestPaymentAsync(LinePayRequest request);
+  Task<LinePayConfirmResponse> ConfirmPaymentAsync(string transactionId, LinePayConfirmRequest request);
 }

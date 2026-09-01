@@ -71,6 +71,7 @@ var linePaySettings = builder.Configuration.GetSection("LinePay").Get<LinePaySet
 builder.Services.AddSingleton(linePaySettings);
 //builder.Services.AddScoped<ILinePayService, LinePayService>();
 builder.Services.AddScoped<ILinePayService, MockLinePayService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 var app = builder.Build();
 
 app.UseDefaultFiles();

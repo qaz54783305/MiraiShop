@@ -7,6 +7,7 @@ public class Order
     public Guid CategoryId { get; set; }
     public string Status{ get; set; } = string.Empty;
     public decimal TotalAmount { get; set; } = 0;
+    public string Currency { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } 
     public DateTime RefundedAt { get; set; }
 }
