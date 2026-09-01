@@ -19,7 +19,7 @@ public class OrderService : IOrderService
 
         try
         {
-            var order = _orderRepository.GetById(guidId);
+            var order = await _orderRepository.GetByIdAsync(guidId);
 
             return new OrderDto(
                 Id: order.Id.ToString(),
