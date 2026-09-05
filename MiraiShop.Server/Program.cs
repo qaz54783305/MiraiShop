@@ -11,8 +11,9 @@ using MiraiShop.Domain.Interfaces;
 using MiraiShop.Infrastructure.Persistence;
 using MiraiShop.Infrastructure.Repositories;
 using DotNetEnv;
-// 必須放在 CreateBuilder 之前
-Env.Load();
+// 從 Server 工作目錄向上尋找根目錄的 .env，且保留部署環境已設定的變數。
+// 必須放在 CreateBuilder 之前，環境變數才會進入 Configuration。
+Env.NoClobber().TraversePath().Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -20,8 +21,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // EF Core DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "缺少資料庫連線字串。請在 .env 或環境變數設定 ConnectionStrings__DefaultConnection。");
+}
 builder.Services.AddDbContext<MiraiShopDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 // JWT Settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
@@ -91,4 +98,3 @@ app.MapControllers();
 app.MapFallbackToFile("/index.html");
 
 app.Run();
-

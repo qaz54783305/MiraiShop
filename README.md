@@ -168,6 +168,10 @@ Clean Architecture 的核心概念是：**依賴只能由外向內**，內層不
 
 ## 開發環境啟動
 
+在專案根目錄的 `.env` 設定 `ConnectionStrings__DefaultConnection`。
+後端會從工作目錄向上尋找 `.env`，並保留系統或容器已設定的環境變數；修改後需要重新啟動後端。
+若連線字串未設定或為空，後端會在啟動時明確報錯。
+
 ```bash
 # 還原套件並建置整個 Solution
 dotnet build
@@ -177,12 +181,21 @@ dotnet test MiraiShop.Tests/MiraiShop.Tests.csproj
 
 # 啟動後端（含 SPA Proxy，會自動啟動前端）
 cd MiraiShop.Server
-dotnet run
+dotnet run --launch-profile https
 ```
 
 後端 API：`https://localhost:7140`  
 Swagger UI：`https://localhost:7140/swagger`  
 前端（Angular dev server）：`https://localhost:56501`
+
+前端使用相對路徑 `/api/...`，由 Angular 開發代理轉送至後端。代理會優先使用
+`ASPNETCORE_HTTPS_PORT`，其次選擇 `ASPNETCORE_URLS` 中的 HTTPS 位址；未提供環境變數時，
+預設為 `https://localhost:7140`，對應後端的 `https` 啟動設定。
+若明確提供僅有 HTTP 的 `ASPNETCORE_URLS`，代理仍會使用該位址，請確認後端不會將它重新導向至 HTTPS。
+
+修改代理設定後，請重新啟動前端開發伺服器。若代理連到 HTTP 5292 而後端啟用了 HTTPS
+重新導向，瀏覽器會收到轉往 7140 的回應，使原本同來源的 API 請求變成跨來源並出現 CORS 錯誤。
+開發時請直接代理到後端 HTTPS；此同來源代理方式不需要額外開放後端 CORS。
 
 ---
 

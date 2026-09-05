@@ -26,27 +26,25 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.isSubmitting) return;
 
     this.isSubmitting = true;
-    this.successMessage = '即將跳轉至登入...';
+    this.successMessage = '';
     this.errorMessage = '';
 
     this.memberService.register(this.form.value).subscribe({
       next: () => {
-        //this.successMessage = '註冊成功！歡迎加入 MiraiShop。';
-       // this.form.reset();
-        //this.isSubmitting = false;
+        this.successMessage = '註冊成功！即將跳轉至登入...';
+
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 3000);
       },
       error: (err) => {
-        if (err.status === 409) {
-          this.errorMessage = '此電子信箱已被註冊，請使用其他信箱或直接登入。';
-        } else {
-          this.errorMessage = '註冊失敗，請稍後再試。';
-        }
+        this.errorMessage = err.status === 409
+          ? '此電子信箱已被註冊，請使用其他信箱或直接登入。'
+          : '註冊失敗，請稍後再試。';
+
         this.isSubmitting = false;
       }
     });
